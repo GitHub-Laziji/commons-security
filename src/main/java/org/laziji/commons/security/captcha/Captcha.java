@@ -14,4 +14,8 @@ public interface Captcha {
     boolean fuzzyVerification(String value);
 
     String getValue();
+
+    long getCreationTime();
+
+    long getEndTime();
 }

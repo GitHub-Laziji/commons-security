@@ -14,6 +14,15 @@ import java.util.Random;
 
 public class ImageCaptchaGenerator {
 
+
+    public static String toBase64(Captcha captcha) throws IOException {
+        return toBase64(captcha.getValue(), 100, 40);
+    }
+
+    public static String toBase64(Captcha captcha, int w, int h) throws IOException {
+        return toBase64(captcha.getValue(), w, h);
+    }
+
     public static String toBase64(String code) throws IOException {
         return toBase64(code, 100, 40);
     }

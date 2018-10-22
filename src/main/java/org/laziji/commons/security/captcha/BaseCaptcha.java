@@ -1,9 +1,10 @@
 package org.laziji.commons.security.captcha;
 
-
 public abstract class BaseCaptcha implements Captcha {
 
-    private final long createTime = System.currentTimeMillis();
+    private final long creationTime = System.currentTimeMillis();
+
+    private final long endTime = creationTime + getValidityTime();
 
 
     public abstract int getValidityTime();
@@ -15,7 +16,7 @@ public abstract class BaseCaptcha implements Captcha {
 
     @Override
     public boolean isEffective() {
-        return createTime + getValidityTime() > System.currentTimeMillis();
+        return creationTime + getValidityTime() > System.currentTimeMillis();
     }
 
     @Override
@@ -26,5 +27,15 @@ public abstract class BaseCaptcha implements Captcha {
     @Override
     public boolean fuzzyVerification(String value) {
         return value != null && getValue() != null && value.toLowerCase().equals(getValue().toLowerCase());
+    }
+
+    @Override
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    @Override
+    public long getEndTime() {
+        return endTime;
     }
 }

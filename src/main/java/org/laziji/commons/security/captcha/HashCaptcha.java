@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class HashCaptcha extends BaseCaptcha {
 
-    private String publicText;
+    private String privateKey;
     private int validityTime;
     private String value;
 
@@ -19,8 +19,8 @@ public class HashCaptcha extends BaseCaptcha {
         Random random = new Random();
         String randomString = DigestUtils.md5Hex(random.nextInt() + "");
         int randomNumber = random.nextInt(range);
-        this.publicText = randomString + DigestUtils.md5Hex(randomString + randomNumber);
-        value = DigestUtils.md5Hex(randomNumber + randomString);
+        value = randomString + DigestUtils.md5Hex(randomString + randomNumber);
+        privateKey = DigestUtils.md5Hex(randomNumber + randomString);
     }
 
     @Override
@@ -31,5 +31,15 @@ public class HashCaptcha extends BaseCaptcha {
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean fuzzyVerification(String value) {
+        return verification(value);
+    }
+
+    @Override
+    public boolean verification(String value) {
+        return value != null && value.equals(privateKey);
     }
 }

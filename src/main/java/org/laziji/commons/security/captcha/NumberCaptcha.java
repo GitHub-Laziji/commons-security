@@ -2,18 +2,18 @@ package org.laziji.commons.security.captcha;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class CharacterCaptcha extends BaseCaptcha {
+public class NumberCaptcha extends BaseCaptcha{
 
-    private static final String CHARS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+    private static final String CHARS = "0123456789";
 
     private int validityTime;
     private String value;
 
-    public CharacterCaptcha() {
-        this(4, 300000);
+    public NumberCaptcha() {
+        this(6,300000);
     }
 
-    public CharacterCaptcha(int length, int validityTime) {
+    public NumberCaptcha(int length, int validityTime) {
         this.validityTime = validityTime;
         this.value = RandomStringUtils.random(length,CHARS);
     }
