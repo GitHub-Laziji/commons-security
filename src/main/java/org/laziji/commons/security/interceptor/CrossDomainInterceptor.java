@@ -17,14 +17,22 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
 
     private String accessControlAllowMethods;
 
+    private Set<String> allowHeaders = new HashSet<>();
+
+    private String accessControlAllowHeaders;
+
+    private Integer maxAge = 86400;
+
     private boolean allowCredentials = false;
 
     private boolean token = false;
 
 
     public CrossDomainInterceptor() {
-        allowMethods.add(RequestMethod.OPTIONS);
-        accessControlAllowMethods = "OPTIONS";
+        addAllowMethod(RequestMethod.OPTIONS);
+
+        addAllowHeader("X-Requested-With");
+        addAllowHeader("Content-Type");
     }
 
     @Override
@@ -34,9 +42,11 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
             return false;
         }
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
-        response.setHeader("Access-Control-Max-Age", "86400");
+        response.setHeader("Access-Control-Allow-Headers", accessControlAllowHeaders);
         response.setHeader("Access-Control-Allow-Methods", accessControlAllowMethods);
+        if (maxAge != null && maxAge > 0) {
+            response.setHeader("Access-Control-Max-Age", maxAge.toString());
+        }
         if (allowCredentials) {
             response.setHeader("Access-Control-Allow-Credentials", "true");
         }
@@ -52,10 +62,31 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
         if (method == null) {
             return;
         }
-        if (!allowMethods.contains(method)) {
-            allowMethods.add(method);
-            accessControlAllowMethods += "," + method.toString();
+        if (allowMethods.contains(method)) {
+            return;
         }
+        allowMethods.add(method);
+        if (accessControlAllowMethods == null) {
+            accessControlAllowMethods = method.toString();
+            return;
+        }
+        accessControlAllowMethods += "," + method.toString();
+    }
+
+    public void addAllowHeader(String header) {
+        if (header == null) {
+            return;
+        }
+        header = header.toLowerCase();
+        if (allowHeaders.contains(header)) {
+            return;
+        }
+        allowHeaders.add(header);
+        if (accessControlAllowHeaders == null) {
+            accessControlAllowHeaders = header;
+            return;
+        }
+        accessControlAllowHeaders += "," + header;
     }
 
     public boolean isAllowCredentials() {
@@ -72,5 +103,13 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
 
     public void setToken(boolean token) {
         this.token = token;
+    }
+
+    public Integer getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(Integer maxAge) {
+        this.maxAge = maxAge;
     }
 }
