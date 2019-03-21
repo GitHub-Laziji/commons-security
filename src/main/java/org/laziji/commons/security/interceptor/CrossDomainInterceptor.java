@@ -37,7 +37,7 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
-        RequestMethod method = RequestMethod.parse(request.getMethod());
+        RequestMethod method = RequestMethod.match(request.getMethod());
         if (method == null || !allowMethods.contains(method)) {
             return false;
         }

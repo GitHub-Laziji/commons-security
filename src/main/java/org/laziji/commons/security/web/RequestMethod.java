@@ -14,18 +14,18 @@ public enum RequestMethod {
     OPTIONS,
     TRACE;
 
-    private static final Map<String, RequestMethod> MAPPING = new TreeMap<>();
+    private static final Map<String, RequestMethod> methodMap = new TreeMap<>();
 
     static {
         for (RequestMethod requestMethod : RequestMethod.values()) {
-            MAPPING.put(requestMethod.toString(), requestMethod);
+            methodMap.put(requestMethod.toString(), requestMethod);
         }
     }
 
-    public static RequestMethod parse(String method) {
+    public static RequestMethod match(String method) {
         if (method == null) {
             return null;
         }
-        return MAPPING.get(method.toUpperCase());
+        return methodMap.get(method.toUpperCase());
     }
 }
