@@ -2,7 +2,7 @@ package org.laziji.commons.security.web;
 
 
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public enum RequestMethod {
     GET,
@@ -14,7 +14,7 @@ public enum RequestMethod {
     OPTIONS,
     TRACE;
 
-    private static final Map<String, RequestMethod> methodMap = new TreeMap<>();
+    private static final Map<String, RequestMethod> methodMap = new ConcurrentHashMap<>();
 
     static {
         for (RequestMethod requestMethod : RequestMethod.values()) {
