@@ -9,12 +9,12 @@ import org.laziji.commons.security.form.Form;
 @Aspect
 public class FormAspectInterceptor {
 
-    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Around("@annotation(org.laziji.commons.security.form.annotation.VerifyForm)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         for (Object arg : point.getArgs()) {
             if (arg instanceof Form) {
                 Form form = (Form) arg;
-                if (!form.verification()) {
+                if (!form.verify()) {
                     throw new FormErrorException();
                 }
             }

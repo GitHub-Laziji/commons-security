@@ -13,7 +13,7 @@ public abstract class BaseForm implements Form{
             .failFast(true).buildValidatorFactory().getValidator();
 
     @Override
-    public boolean verification() {
+    public boolean verify() {
         return validator.validate(this).size() == 0;
     }
 
