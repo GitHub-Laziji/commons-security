@@ -26,6 +26,11 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
 
     private boolean allowCredentials = false;
 
+    public static CrossDomainInterceptor defaultInstance() {
+        CrossDomainInterceptor interceptor = new CrossDomainInterceptor();
+        interceptor.addAllowMethod(RequestMethod.GET, RequestMethod.POST);
+        return interceptor;
+    }
 
     public CrossDomainInterceptor() {
         addAllowMethod(RequestMethod.OPTIONS);
@@ -52,16 +57,22 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
         return method != RequestMethod.OPTIONS;
     }
 
-    public void addAllowMethod(RequestMethod method) {
-        addHeaderValueItem(allowMethods, accessControlAllowMethods, method.name());
+    public void addAllowMethod(RequestMethod... methods) {
+        for (RequestMethod method : methods) {
+            addHeaderValueItem(allowMethods, accessControlAllowMethods, method.name());
+        }
     }
 
-    public void addAllowHeader(String header) {
-        addHeaderValueItem(allowHeaders, accessControlAllowHeaders, header);
+    public void addAllowHeader(String... headers) {
+        for (String header : headers) {
+            addHeaderValueItem(allowHeaders, accessControlAllowHeaders, header);
+        }
     }
 
-    public void addExposeHeaders(String header) {
-        addHeaderValueItem(exposeHeaders, accessControlExposeHeaders, header);
+    public void addExposeHeaders(String... headers) {
+        for (String header : headers) {
+            addHeaderValueItem(exposeHeaders, accessControlExposeHeaders, header);
+        }
     }
 
     public boolean isAllowCredentials() {
