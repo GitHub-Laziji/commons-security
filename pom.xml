@@ -6,7 +6,7 @@
 
     <groupId>org.laziji.commons</groupId>
     <artifactId>security</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <name>Laziji Commons Security</name>
 
     <build>
@@ -50,6 +50,7 @@
         </dependency>
     </dependencies>
 
+    <!--mvn deploy-->
     <distributionManagement>
         <repository>
             <id>github</id>
