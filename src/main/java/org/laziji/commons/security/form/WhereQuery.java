@@ -18,7 +18,7 @@ public class WhereQuery extends BaseForm {
     private Map<String, Set<Object>> in;
     private Map<String, Set<Object>> notIn;
     private Set<String> isNull;
-    private Set<String> notNull;
+    private Set<String> isNotNull;
     private Set<String> orderByAsc;
     private Set<String> orderByDesc;
     private WhereQuery or;
@@ -143,12 +143,12 @@ public class WhereQuery extends BaseForm {
         this.isNull = isNull;
     }
 
-    public Set<String> getNotNull() {
-        return notNull;
+    public Set<String> getIsNotNull() {
+        return isNotNull;
     }
 
-    public void setNotNull(Set<String> notNull) {
-        this.notNull = notNull;
+    public void setIsNotNull(Set<String> isNotNull) {
+        this.isNotNull = isNotNull;
     }
 
     public Set<String> getOrderByAsc() {
